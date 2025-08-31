@@ -193,11 +193,11 @@ export function GiftRegistry() {
                           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full blur-sm" />
                           <Info className="relative h-6 w-6 text-primary" />
                         </div>
-                        How Our Blockchain Registry Works
+                        How Our Digital Registry Works
                       </DialogTitle>
                       <DialogDescription className="text-pretty text-muted-foreground text-base">
                         Experience the future of wedding registries with secure, flexible digital gifts powered by
-                        blockchain technology.
+                        blockchain technology, through Stellar.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-6 mt-6">
@@ -229,8 +229,7 @@ export function GiftRegistry() {
                             <div>
                               <h4 className="font-semibold text-foreground mb-2">2. Secure Blockchain Transaction</h4>
                               <p className="text-sm text-muted-foreground">
-                                Your purchase is processed through secure blockchain technology, ensuring transparency
-                                and immutable records of all transactions.
+                                Your purchase is processed through secure blockchain technology, through Stellar. 
                               </p>
                             </div>
                           </div>
@@ -247,7 +246,7 @@ export function GiftRegistry() {
                               <h4 className="font-semibold text-foreground mb-2">3. Token Transfer to Couple</h4>
                               <p className="text-sm text-muted-foreground">
                                 Digital tokens representing your gift are instantly transferred to the couple's secure
-                                wallet, along with your personal message.
+                                wallet, along with your personal message. 
                               </p>
                             </div>
                           </div>
@@ -264,7 +263,7 @@ export function GiftRegistry() {
                               <h4 className="font-semibold text-foreground mb-2">4. Flexible Redemption</h4>
                               <p className="text-sm text-muted-foreground">
                                 The couple can redeem tokens for the actual items, exchange them for other products, or
-                                use them however they prefer - ultimate flexibility!
+                                use them however they prefer, even cash them out - ultimate flexibility!
                               </p>
                             </div>
                           </div>
@@ -297,13 +296,7 @@ export function GiftRegistry() {
                             <li className="flex items-center gap-2">
                               <div className="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0" />
                               <span>
-                                <strong className="text-foreground">Secure & Permanent:</strong> Blockchain ensures gifts can never be lost
-                              </span>
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
-                              <span>
-                                <strong className="text-foreground">No Duplicates:</strong> Smart contracts prevent duplicate purchases
+                                <strong className="text-foreground">Secure & Permanent:</strong> Blockchain ensures gifts go directly to the couple's wallet
                               </span>
                             </li>
                           </ul>
