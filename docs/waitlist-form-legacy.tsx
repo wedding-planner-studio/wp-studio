@@ -112,7 +112,7 @@ export default function WaitlistForm() {
                 <Button variant="ghost">Log in</Button>
               </Link>
               <Link
-                href="https://calendar.notion.so/meet/juancasian/evana"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -152,7 +152,7 @@ export default function WaitlistForm() {
                   </Button>
                 </Link>
                 <a
-                  href="https://calendar.notion.so/meet/juancasian/evana"
+                  href="/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

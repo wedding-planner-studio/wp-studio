@@ -7,7 +7,7 @@ import { env } from '@/env';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export const BOOK_A_MEETING_URL = 'https://meetings.hubspot.com/jcasian';
+export const BOOK_A_MEETING_URL = '/';
 
 export const SLACK_CHANNEL_ID_CRONS =
   env.NEXT_PUBLIC_NODE_ENV === 'production' ? 'C08QFC9SH6V' : 'C08Q6A3KDSP';

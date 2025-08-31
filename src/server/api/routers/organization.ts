@@ -6,7 +6,7 @@ import {
 } from '@/server/services/organization/schema/organization-write.schema';
 import { OrganizationService } from '@/server/services/organization/organization.service';
 import { UsageService } from '@/server/services/usage/usage-service';
-import { z } from 'node_modules/zod/lib';
+import { z } from 'zod';
 
 export const organizationRouter = createTRPCRouter({
   get: privateProcedure.query(async ({ ctx }) => {
