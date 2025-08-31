@@ -34,7 +34,7 @@ const Footer = () => {
                     />
                   </svg>
                 </div>
-                <span className="text-xl font-semibold">wpstudio</span>
+                <span className="text-xl font-semibold">WP Studio</span>
               </div>
 
               <p className="text-gray-300 text-sm mb-6 max-w-xs">
