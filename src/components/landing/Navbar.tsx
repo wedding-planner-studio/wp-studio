@@ -53,7 +53,7 @@ const Navbar = () => {
                     />
                   </svg>
                 </div>
-                <span className="font-bold text-gray-900 hidden sm:block text-lg">evana</span>
+                <span className="font-bold text-gray-900 hidden sm:block text-lg">wpstudio</span>
               </Link>
               <div className="hidden md:block ml-10">
                 <div className="flex items-center space-x-8">

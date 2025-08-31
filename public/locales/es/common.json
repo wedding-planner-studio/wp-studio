@@ -4,7 +4,7 @@
   "footer.nav.pricing": "Precios",
   "footer.nav.privacyPolicy": "Política de Privacidad",
   "footer.nav.getAccess": "Obtener acceso",
-  "footer.copyright": "© 2025 Evana. Todos los derechos reservados.",
+  "footer.copyright": "© 2025 WP Studio. Todos los derechos reservados.",
 
   "waitlist.nav.pricing": "Precios",
   "waitlist.nav.whatsappMessaging": "Mensajería de WhatsApp",
@@ -14,7 +14,7 @@
   "waitlist.nav.talkToUs": "Habla con nosotros",
 
   "waitlist.hero.title": "Organiza tu",
-  "waitlist.hero.title.highlight": "evento perfecto con evana",
+  "waitlist.hero.title.highlight": "evento perfecto con wpstudio",
   "waitlist.hero.subtitle": "Tu plataforma todo en uno de",
   "waitlist.hero.subtitle.highlight": "Wedding Planer",
   "waitlist.hero.subtitle.suffix": ".",
@@ -122,7 +122,7 @@
   "pricing.features.customWhatsappDesc": "Tu evento, tu marca, tu número",
 
   "pricing.singleEvent.title": "Opción de Evento Único",
-  "pricing.singleEvent.planName": "Evana Evento Único",
+  "pricing.singleEvent.planName": "WP Studio Evento Único",
   "pricing.singleEvent.taxes": "+impuestos",
   "pricing.singleEvent.perEvent": "/evento",
   "pricing.singleEvent.currency": "Precios en Pesos Mexicanos",
@@ -253,7 +253,7 @@
 
   "usage.messages": "Mensajes",
   "usage.events": "Eventos",
-  "usage.paymentFailed": "Tu último pago falló. Por favor, actualiza tu método de pago para continuar usando Evana.",
+  "usage.paymentFailed": "Tu último pago falló. Por favor, actualiza tu método de pago para continuar usando WP Studio.",
   "usage.resetDate": "Uso se reiniciará el {{date}}",
   "usage.updatePayment": "Actualizar Método de Pago",
   "usage.upgradeTo": "Actualizar a {{plan}}",
@@ -900,8 +900,8 @@
   "coupleAccount.securityNote": "Por razones de seguridad, la contraseña no estará accesible después de cerrar este diálogo.",
 
   "coupleAccount.clipboard.copied": "{{item}} copiado al portapapeles",
-  "coupleAccount.share.title": "Credenciales del Portal de Bodas Evana",
-  "coupleAccount.share.text": "Aquí están tus credenciales del portal de bodas Evana:\nUsuario: {{username}}\nContraseña: {{password}}",
+  "coupleAccount.share.title": "Credenciales del Portal de Bodas WP Studio",
+  "coupleAccount.share.text": "Aquí están tus credenciales del portal de bodas WP Studio:\nUsuario: {{username}}\nContraseña: {{password}}",
   "coupleAccount.quickLoginAccess": "Acceso Rápido",
   "coupleAccount.scanQRCode": "Escanea este código QR para acceder al portal de la boda",
   "coupleAccount.accountCreatedSuccess": "Cuenta creada exitosamente",
@@ -1030,7 +1030,7 @@
   "bulkUpload.chooseCsvFile": "Elegir un archivo CSV",
   "bulkUpload.browse": "Examinar",
   "bulkUpload.downloadTemplate": "Descargar Plantilla",
-  "bulkUpload.templateFileName": "Plantilla de Carga Masiva Evana - {{fileName}}",
+  "bulkUpload.templateFileName": "Plantilla de Carga Masiva WP Studio - {{fileName}}",
   "bulkUpload.validGuestsCount": "{{valid}} de {{total}} invitados son válidos",
   "bulkUpload.cancel": "Cancelar",
   "bulkUpload.importGuests": "Importar {{count}} Invitado{{plural}}",

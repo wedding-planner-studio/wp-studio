@@ -78,8 +78,8 @@ export const WhatsAppPreview = ({
             'https://chatboda.vercel.app/api/cdn/',
             `${window.location.origin}/api/cdn/`
           );
-        } else if (window.location.origin !== 'https://evana.mx' && url.includes('evana.mx')) {
-          url = url.replace(`https://evana.mx/api/cdn/`, `${window.location.origin}/api/cdn/`);
+        } else if (window.location.origin !== 'https://wpstudio.mx' && url.includes('wpstudio.mx')) {
+          url = url.replace(`https://wpstudio.mx/api/cdn/`, `${window.location.origin}/api/cdn/`);
         }
         // Check if the URL contains a variable pattern {{n}}
         const match = url.match(/{{(\d+)}}/);

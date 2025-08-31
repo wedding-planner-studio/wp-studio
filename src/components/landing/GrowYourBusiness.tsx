@@ -14,7 +14,7 @@ export default function GrowYourBusiness() {
           <span className="text-purple-500">El caos no.</span>
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8">
-          Evana garantiza atención personalizada para cada invitado, incluso mientras manejas más
+          WP Studio garantiza atención personalizada para cada invitado, incluso mientras manejas más
           eventos al mismo tiempo.
         </p>
         <Link href={BOOK_A_MEETING_URL} target="_blank" rel="noopener noreferrer">

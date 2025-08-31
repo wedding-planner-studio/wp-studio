@@ -34,7 +34,7 @@ const Footer = () => {
                     />
                   </svg>
                 </div>
-                <span className="text-xl font-semibold">evana</span>
+                <span className="text-xl font-semibold">wpstudio</span>
               </div>
 
               <p className="text-gray-300 text-sm mb-6 max-w-xs">
@@ -43,7 +43,7 @@ const Footer = () => {
               </p>
 
               {/* Copyright */}
-              <p className="text-gray-400 text-sm">©2025 Evana. Todos los derechos reservados.</p>
+              <p className="text-gray-400 text-sm">©2025 WP Studio. Todos los derechos reservados.</p>
             </div>
 
             {/* Servicios */}

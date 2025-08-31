@@ -9,7 +9,7 @@ export default function PersonalizedAssistance() {
           <span className="text-purple-500">que cada invitado merece</span>
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-          Evana atiende a tus invitados a cualquier hora y en su propio idioma. Para que tú puedas
+          WP Studio atiende a tus invitados a cualquier hora y en su propio idioma. Para que tú puedas
           enfocarte en lo que realmente importa.
         </p>
       </div>
@@ -30,7 +30,7 @@ export default function PersonalizedAssistance() {
             </div>
           </div>
 
-          {/* Evana Response 1 - Spanish */}
+          {/* WP Studio Response 1 - Spanish */}
           <div className="flex items-start space-x-3 justify-end animate-[slideInRight_0.8s_ease-out_1s_both]">
             <div className="flex-1 text-right">
               <div className="bg-purple-600 text-white rounded-2xl px-4 py-3 shadow-sm inline-block">
@@ -39,7 +39,7 @@ export default function PersonalizedAssistance() {
                   Botánico 🌸
                 </p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Evana • Instantáneo</p>
+              <p className="text-xs text-gray-500 mt-1">WP Studio • Instantáneo</p>
             </div>
             <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold">AI</span>
@@ -61,7 +61,7 @@ export default function PersonalizedAssistance() {
             </div>
           </div>
 
-          {/* Evana Response 2 - English */}
+          {/* WP Studio Response 2 - English */}
           <div className="flex items-start space-x-3 justify-end animate-[slideInRight_0.8s_ease-out_3s_both]">
             <div className="flex-1 text-right">
               <div className="bg-purple-600 text-white rounded-2xl px-4 py-3 shadow-sm inline-block">
@@ -70,7 +70,7 @@ export default function PersonalizedAssistance() {
                   there! 🤵
                 </p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Evana • Instant</p>
+              <p className="text-xs text-gray-500 mt-1">WP Studio • Instant</p>
             </div>
             <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold">AI</span>
@@ -90,7 +90,7 @@ export default function PersonalizedAssistance() {
             </div>
           </div>
 
-          {/* Evana Response 3 - Italian */}
+          {/* WP Studio Response 3 - Italian */}
           <div className="flex items-start space-x-3 justify-end animate-[slideInRight_0.8s_ease-out_5s_both]">
             <div className="flex-1 text-right">
               <div className="bg-purple-600 text-white rounded-2xl px-4 py-3 shadow-sm inline-block">
@@ -98,7 +98,7 @@ export default function PersonalizedAssistance() {
                   Ciao Giulia! Sì, abbiamo opzioni vegetariane deliziose nel menu! 🌱
                 </p>
               </div>
-              <p className="text-xs text-gray-500 mt-1">Evana • Istantaneo</p>
+              <p className="text-xs text-gray-500 mt-1">WP Studio • Istantaneo</p>
             </div>
             <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center flex-shrink-0">
               <span className="text-white text-xs font-bold">AI</span>

@@ -11,4 +11,4 @@ Disallow: /logout/
 # Allow: /api/og/
 
 # Point to the sitemap
-Sitemap: https://evana.mx/sitemap.xml
+Sitemap: https://wpstudio.mx/sitemap.xml

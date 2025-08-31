@@ -38,7 +38,7 @@ export type Plan = {
 export const PLANS: Record<PrismaPlan, Plan> = {
   LITE: {
     id: 'lite',
-    name: 'Evana Lite',
+    name: 'WP Studio Lite',
     price: 1990,
     currency: 'MXN',
     interval: 'month',
@@ -67,7 +67,7 @@ export const PLANS: Record<PrismaPlan, Plan> = {
   },
   PRO: {
     id: 'pro',
-    name: 'Evana Pro',
+    name: 'WP Studio Pro',
     price: 4990,
     currency: 'MXN',
     interval: 'month',
@@ -96,7 +96,7 @@ export const PLANS: Record<PrismaPlan, Plan> = {
   },
   ELITE: {
     id: 'elite',
-    name: 'Evana Elite',
+    name: 'WP Studio Elite',
     price: 9990,
     currency: 'MXN',
     interval: 'month',
@@ -126,7 +126,7 @@ export const PLANS: Record<PrismaPlan, Plan> = {
   },
   SINGLE: {
     id: 'single',
-    name: 'Evana Single Event',
+    name: 'WP Studio Single Event',
     price: 7990,
     currency: 'MXN',
     interval: 'one-time',

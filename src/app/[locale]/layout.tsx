@@ -14,14 +14,14 @@ import BfcacheHandler from '@/components/BfcacheHandler';
 import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Evana',
+  title: 'WP Studio',
   description: 'All-in-one wedding planning with smart messaging and automated guest replies.',
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
   openGraph: {
-    title: 'Evana | All-in-one wedding planning',
-    url: 'https://evana.mx',
+    title: 'WP Studio | All-in-one wedding planning',
+    url: 'https://wpstudio.mx',
     description:
-      'Say goodbye to guest chaos. Evana automates WhatsApp replies and updates your CRM in real time',
+      'Say goodbye to guest chaos. WP Studio automates WhatsApp replies and updates your CRM in real time',
     images: [
       {
         url: 'https://8eyoe3mdhc.ufs.sh/f/n8JiHxKrIpGQfS96DRkp2NDESUiufGA5Pd9vVOMBtRITqwJW',

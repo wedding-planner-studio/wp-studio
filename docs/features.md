@@ -1,14 +1,14 @@
-💡 Lo que puedes hacer con Evana
-Evana es tu asistente inteligente para planear eventos. Con nuestras herramientas, puedes automatizar tareas clave, ahorrar tiempo y brindar una experiencia inolvidable tanto para tus clientes como para sus invitados.
+💡 Lo que puedes hacer con WP Studio
+WP Studio es tu asistente inteligente para planear eventos. Con nuestras herramientas, puedes automatizar tareas clave, ahorrar tiempo y brindar una experiencia inolvidable tanto para tus clientes como para sus invitados.
 
 ✅ Ofrece invitaciones + confirmaciones (RSVP) sin seguimiento manual
-Con Evana puedes enviar más de 500 invitaciones con un solo clic usando nuestra función de Mensajes Masivos (bulkMessages). Los invitados reciben un mensaje personalizado y pueden confirmar su asistencia sin tener que llamarte, mandarte mensajes o llenar formularios.
+Con WP Studio puedes enviar más de 500 invitaciones con un solo clic usando nuestra función de Mensajes Masivos (bulkMessages). Los invitados reciben un mensaje personalizado y pueden confirmar su asistencia sin tener que llamarte, mandarte mensajes o llenar formularios.
 
 ✅ Confirma asistencias automáticamente (¡incluso los “super sí amiga!”)
 Nuestra IA está entrenada para interpretar respuestas informales, con errores o emojis. Gracias a nuestro Chatbot Avanzado (advancedChatbot), cada respuesta se entiende y registra, sin que tú tengas que leer mensaje por mensaje.
 
 ✅ Ten un empleado digital 24/7 respondiendo dudas
-Evana te da un asistente virtual que responde dudas de los invitados sobre horarios, vestimenta, ubicación, estacionamiento y más — todo de forma personalizada.
+WP Studio te da un asistente virtual que responde dudas de los invitados sobre horarios, vestimenta, ubicación, estacionamiento y más — todo de forma personalizada.
 📲 Puedes usar tu propio número de WhatsApp con nuestro Perfil Personalizado de WhatsApp (customWhatsapp), para que las respuestas salgan desde tu identidad profesional.
 
 ✅ Pregunta por restricciones alimenticias, transporte o bebida favorita
@@ -35,7 +35,7 @@ Con la Cuenta para parejas (coupleAccount), tanto tú como los novios pueden con
 
 ¿Listo para trabajar menos y lograr más?
 
-Evana es como tener un equipo completo trabajando por ti, pero desde una sola app.
+WP Studio es como tener un equipo completo trabajando por ti, pero desde una sola app.
 
 🎁 Primer evento con 60% de descuento
 📩 Escríbenos para empezar

@@ -38,7 +38,7 @@ export default function WaitlistForm() {
               <Link href="/" className="flex items-center">
                 <Image
                   src="/evana_logo.png"
-                  alt="Evana"
+                  alt="WP Studio"
                   width={100}
                   height={28}
                   className="h-5 w-auto -translate-x-4"
@@ -132,7 +132,7 @@ export default function WaitlistForm() {
               <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-[#0F172A] leading-[1.1]">
                 Plan your perfect
                 <div className="flex flex-col mt-2">
-                  <span className="text-[#9333EA]">event with evana</span>
+                  <span className="text-[#9333EA]">event with wpstudio</span>
                 </div>
               </h1>
               <p className="mt-8 text-lg text-gray-600 max-w-[480px] leading-relaxed">

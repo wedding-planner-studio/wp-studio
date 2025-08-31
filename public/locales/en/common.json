@@ -4,7 +4,7 @@
   "footer.nav.pricing": "Pricing",
   "footer.nav.privacyPolicy": "Privacy Policy",
   "footer.nav.getAccess": "Get Access",
-  "footer.copyright": "© 2025 Evana. All rights reserved.",
+  "footer.copyright": "© 2025 WP Studio. All rights reserved.",
 
   "waitlist.nav.pricing": "Pricing",
   "waitlist.nav.whatsappMessaging": "WhatsApp Messaging",
@@ -14,7 +14,7 @@
   "waitlist.nav.talkToUs": "Talk to Us",
 
   "waitlist.hero.title": "Plan your perfect",
-  "waitlist.hero.title.highlight": "event with evana",
+  "waitlist.hero.title.highlight": "event with wpstudio",
   "waitlist.hero.subtitle": "Your all-in-one",
   "waitlist.hero.subtitle.highlight": "Wedding Planning",
   "waitlist.hero.subtitle.suffix": "platform.",
@@ -122,7 +122,7 @@
   "pricing.features.typeCustom": "Custom AI",
 
   "pricing.singleEvent.title": "Single Event Option",
-  "pricing.singleEvent.planName": "Evana Single Event",
+  "pricing.singleEvent.planName": "WP Studio Single Event",
   "pricing.singleEvent.taxes": "+taxes",
   "pricing.singleEvent.perEvent": "/event",
   "pricing.singleEvent.currency": "Prices in Mexican Pesos",
@@ -253,7 +253,7 @@
 
   "usage.messages": "Messages",
   "usage.events": "Events",
-  "usage.paymentFailed": "Your last payment failed. Please update your payment method to continue using Evana.",
+  "usage.paymentFailed": "Your last payment failed. Please update your payment method to continue using WP Studio.",
   "usage.resetDate": "Usage will reset {{date}}",
   "usage.updatePayment": "Update Payment Method",
   "usage.upgradeTo": "Upgrade to {{plan}}",
@@ -897,8 +897,8 @@
   "coupleAccount.securityNote": "For security reasons, the password will not be accessible after closing this dialog.",
 
   "coupleAccount.clipboard.copied": "{{item}} copied to clipboard",
-  "coupleAccount.share.title": "Evana Wedding Portal Credentials",
-  "coupleAccount.share.text": "Here are your Evana wedding portal credentials:\nUsername: {{username}}\nPassword: {{password}}",
+  "coupleAccount.share.title": "WP Studio Wedding Portal Credentials",
+  "coupleAccount.share.text": "Here are your WP Studio wedding portal credentials:\nUsername: {{username}}\nPassword: {{password}}",
   "coupleAccount.quickLoginAccess": "Quick Login Access",
   "coupleAccount.scanQRCode": "Scan this QR code to access the wedding portal",
   "coupleAccount.accountCreatedSuccess": "Account created successfully",
@@ -1025,7 +1025,7 @@
   "bulkUpload.chooseCsvFile": "Choose a CSV file",
   "bulkUpload.browse": "Browse",
   "bulkUpload.downloadTemplate": "Download Template",
-  "bulkUpload.templateFileName": "Evana Bulk Upload Template - {{fileName}}",
+  "bulkUpload.templateFileName": "WP Studio Bulk Upload Template - {{fileName}}",
   "bulkUpload.validGuestsCount": "{{valid}} of {{total}} guests are valid",
   "bulkUpload.cancel": "Cancel",
   "bulkUpload.importGuests": "Import {{count}} Guest{{plural}}",

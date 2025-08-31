@@ -118,7 +118,7 @@ websocat -v ws://localhost:3000/api/mcp
 ### Successful MCP Tool Response
 
 ```
-data: {"jsonrpc":"2.0","id":3,"result":{"content":[{"type":"text","text":"🎉 **Evana Event Capacity Analysis**\n\n**Event Type:** Wedding\n**Guest Count:** 100\n**Recommended Venue Capacity:** 115 (includes 15% comfort buffer)\n\n**Space Breakdown:**\n• Dance Floor Capacity: 30 people\n• Cocktail/Reception Area: 80 people\n\n**Additional Considerations for wedding:**\n• Photo booth space\n• Gift table area\n• Bridal suite access\n\n**Evana Pro Tip:** Book a venue that can accommodate 115+ guests for optimal comfort and flow. Consider weather contingencies for outdoor events!"}]}}
+data: {"jsonrpc":"2.0","id":3,"result":{"content":[{"type":"text","text":"🎉 **WP Studio Event Capacity Analysis**\n\n**Event Type:** Wedding\n**Guest Count:** 100\n**Recommended Venue Capacity:** 115 (includes 15% comfort buffer)\n\n**Space Breakdown:**\n• Dance Floor Capacity: 30 people\n• Cocktail/Reception Area: 80 people\n\n**Additional Considerations for wedding:**\n• Photo booth space\n• Gift table area\n• Bridal suite access\n\n**WP Studio Pro Tip:** Book a venue that can accommodate 115+ guests for optimal comfort and flow. Consider weather contingencies for outdoor events!"}]}}
 
 ```
 
@@ -170,7 +170,7 @@ curl -N -H "Accept: text/event-stream" \
      -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}' \
      -H "Content-Type: application/json" \
      -X POST \
-     https://your-evana-domain.vercel.app/api/mcp
+     https://your-wpstudio-domain.vercel.app/api/mcp
 ```
 
 ### With timeout for long-running connections
@@ -179,7 +179,7 @@ curl -N -H "Accept: text/event-stream" \
 # Add timeout to prevent hanging
 timeout 30s curl -N -H "Accept: text/event-stream" \
      -H "Cache-Control: no-cache" \
-     https://your-evana-domain.vercel.app/api/mcp
+     https://your-wpstudio-domain.vercel.app/api/mcp
 ```
 
 ## Automated SSE Testing Script

@@ -89,7 +89,7 @@ export function Sidebar<T extends Record<string, string | boolean | undefined>>(
             ) : (
               <Image
                 src="/evana_logo.png"
-                alt="Evana"
+                alt="WP Studio"
                 width={80}
                 height={20}
                 className="object-contain mt-1 -translate-x-2"

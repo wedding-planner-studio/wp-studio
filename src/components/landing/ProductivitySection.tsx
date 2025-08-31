@@ -43,7 +43,7 @@ const ProductivitySection = () => {
 
                 {/* Title and Description */}
                 <h2 className="text-xl font-normal text-gray-900 mb-4 px-6">
-                  Evana organiza tu evento.
+                  WP Studio organiza tu evento.
                 </h2>
                 <p className="text-zinc-400 mb-8 font-light tracking-wide px-6">
                   Cronograma automático de actividades, confirmaciones y recordatorios para el día
@@ -151,7 +151,7 @@ const ProductivitySection = () => {
                   Gestión completa de invitados.
                 </h2>
                 <p className="text-zinc-400 mb-8 font-light tracking-wide px-6">
-                  Evana organiza automáticamente confirmaciones, restricciones alimenticias y
+                  WP Studio organiza automáticamente confirmaciones, restricciones alimenticias y
                   asignación de mesas.
                 </p>
 

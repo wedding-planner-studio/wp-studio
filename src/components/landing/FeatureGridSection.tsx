@@ -68,7 +68,7 @@ const FeatureGridSection = () => {
                 <div className="bg-gray-50 border border-b-white rounded-2xl overflow-hidden relative transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 ease-out h-80">
                   <Image
                     src="/seat-assignment-screenshot.png"
-                    alt="Panel de control de Evana mostrando asignación de asientos y organización de mesas"
+                    alt="Panel de control de WP Studio mostrando asignación de asientos y organización de mesas"
                     width={1000}
                     height={1000}
                     className="w-full h-full object-cover object-top"

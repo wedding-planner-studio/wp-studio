@@ -1,10 +1,10 @@
-# Evana MCP Server
+# WP Studio MCP Server
 
-This document describes the Model Context Protocol (MCP) server implementation for Evana, providing AI assistants with access to event planning tools and calculations.
+This document describes the Model Context Protocol (MCP) server implementation for WP Studio, providing AI assistants with access to event planning tools and calculations.
 
 ## Overview
 
-The Evana MCP server exposes three powerful tools for event planning:
+The WP Studio MCP server exposes three powerful tools for event planning:
 
 1. **Event Capacity Calculator** - Calculates optimal venue capacity based on guest count and event type
 2. **RSVP Trend Analyzer** - Provides insights on RSVP patterns and response rates
@@ -12,10 +12,10 @@ The Evana MCP server exposes three powerful tools for event planning:
 
 ## Deployment
 
-The MCP server is automatically deployed as part of the Evana application at:
+The MCP server is automatically deployed as part of the WP Studio application at:
 
 ```
-https://your-evana-domain.com/api/mcp
+https://your-wpstudio-domain.com/api/mcp
 ```
 
 ## Available Tools
@@ -85,8 +85,8 @@ Add the following to your Cursor MCP configuration:
 ```json
 {
   "mcpServers": {
-    "evana": {
-      "url": "https://your-evana-domain.com/api/mcp"
+    "wpstudio": {
+      "url": "https://your-wpstudio-domain.com/api/mcp"
     }
   }
 }
@@ -99,9 +99,9 @@ Add to your Claude Desktop configuration file:
 ```json
 {
   "mcpServers": {
-    "evana": {
+    "wpstudio": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch", "https://your-evana-domain.com/api/mcp"]
+      "args": ["-y", "@modelcontextprotocol/server-fetch", "https://your-wpstudio-domain.com/api/mcp"]
     }
   }
 }
@@ -141,4 +141,4 @@ Add to your Claude Desktop configuration file:
 
 ## Support
 
-For technical support or feature requests, contact the Evana development team.
+For technical support or feature requests, contact the WP Studio development team.

@@ -33,7 +33,7 @@ const PublicLayout = ({ children, includeFooter = false }: PublicLayoutProps) =>
               <Link href="/" className="flex items-center">
                 <Image
                   src="/evana_logo.png"
-                  alt="Evana"
+                  alt="WP Studio"
                   width={100}
                   height={28}
                   className="h-5 w-auto -translate-x-4"

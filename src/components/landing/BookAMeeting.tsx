@@ -21,7 +21,7 @@ export default function BookAMeeting() {
       setIsSubmitted(true);
       setFormData({ name: '', email: '', phone: '' });
       toast.success(
-        'Gracias por tu interés en Evana. Nos pondremos en contacto contigo muy pronto.'
+        'Gracias por tu interés en WP Studio. Nos pondremos en contacto contigo muy pronto.'
       );
     },
     onError: error => {
@@ -82,7 +82,7 @@ export default function BookAMeeting() {
 
           {/* Description */}
           <p className="text-base text-gray-500 max-w-xl mx-auto mb-6 leading-relaxed">
-            Descubre cómo Evana puede transformar la gestión de tus eventos. Agenda una demo
+            Descubre cómo WP Studio puede transformar la gestión de tus eventos. Agenda una demo
             personalizada o déjanos tus datos para comenzar.
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function BookAMeeting() {
                   </div>
 
                   <p className="text-purple-100 text-sm leading-relaxed">
-                    Únete a más de 500 wedding planners que ya confían en Evana para crear
+                    Únete a más de 500 wedding planners que ya confían en WP Studio para crear
                     experiencias excepcionales.
                   </p>
                 </div>
@@ -203,7 +203,7 @@ export default function BookAMeeting() {
                   </div>
 
                   <p className="text-xs text-gray-500 text-center pt-2">
-                    Al enviar este formulario, aceptas recibir comunicaciones de Evana. Puedes
+                    Al enviar este formulario, aceptas recibir comunicaciones de WP Studio. Puedes
                     cancelar en cualquier momento.
                   </p>
                 </form>
