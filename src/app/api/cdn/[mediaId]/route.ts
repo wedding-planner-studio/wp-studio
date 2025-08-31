@@ -45,7 +45,7 @@ export async function GET(_req: NextRequest, context) {
           } else if (ext === '.png') {
             contentType = 'image/png';
           }
-          return new NextResponse(fileBuffer, {
+          return new NextResponse(new Uint8Array(fileBuffer), {
             headers: {
               'Content-Type': contentType,
               'Cache-Control': 'public, max-age=31536000, immutable',
@@ -96,7 +96,7 @@ export async function GET(_req: NextRequest, context) {
     }
 
     const arrayBuffer = await fileRes.arrayBuffer();
-    const buffer = Buffer.from(new Uint8Array(arrayBuffer));
+    const buffer = new Uint8Array(arrayBuffer);
 
     return new NextResponse(buffer, {
       headers: {
