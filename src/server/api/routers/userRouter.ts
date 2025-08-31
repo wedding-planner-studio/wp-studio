@@ -54,12 +54,12 @@ export const userRouter = createTRPCRouter({
           },
         });
 
-        await new SlackNotification(
-          waitlistEntryTemplate(
-            `${waitlistEntry.name} (${waitlistEntry.email})`,
-            waitlistEntry.phone ?? undefined
-          )
-        ).send();
+        // await new SlackNotification(
+        //   waitlistEntryTemplate(
+        //     `${waitlistEntry.name} (${waitlistEntry.email})`,
+        //     waitlistEntry.phone ?? undefined
+        //   )
+        // ).send();
         return { success: true, data: waitlistEntry };
       } catch (error) {
         console.error(error);
