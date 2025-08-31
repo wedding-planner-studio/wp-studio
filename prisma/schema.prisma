@@ -1,0 +1,975 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum QuestionCategory {
+  GENERAL
+  VENUE
+  DRESS_CODE
+  FOOD
+  SCHEDULE
+  GIFTS
+  OTHER
+}
+
+enum QuestionStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum OrganizationPlan {
+  LITE
+  PRO
+  ELITE
+  SINGLE
+}
+
+model Organization {
+  id                      String                       @id @default(cuid())
+  name                    String
+  createdAt               DateTime                     @default(now())
+  updatedAt               DateTime                     @updatedAt
+  attributes              Json?
+  phoneNumber             String?
+  status                  OrganizationStatus           @default(ACTIVE)
+  users                   User[]
+  events                  Event[]
+  mediaFiles              MediaFile[]
+  chatSessions            ChatSession[]
+  messageCredits          OrganizationMessageCredits[]
+  plan                    OrganizationPlan             @default(LITE)
+  twilioCredentials       TwilioCredentials?
+  hiddenWhatsappTemplates HiddenWhatsappTemplates[]
+  // Feature flags
+  whitelistedFeatures FeatureFlagOrgWhitelist[]
+  blacklistedFeatures FeatureFlagOrgBlacklist[]
+  
+  // Feature-based pricing relations
+  organizationFeatures    OrganizationFeature[]
+  organizationLimits      OrganizationLimit[]
+  organizationUsage       OrganizationUsage[]
+
+  @@index([name])
+  @@index([phoneNumber])
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum UserRole {
+  ORG_ADMIN // Can manage the entire organization
+  ORG_MEMBER // Standard organization user
+  EVENT_MANAGER // Couple account with limited access to their own event
+  SUDO // Has access to all features and can manage all organizations
+}
+
+model User {
+  id                       String                  @id @default(cuid())
+  username                 String                  @unique
+  email                    String?
+  firstName                String?
+  lastName                 String?
+  phone                    String?
+  role                     UserRole                @default(EVENT_MANAGER)
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+  attributes               Json?
+  status                   UserStatus              @default(ACTIVE)
+  organizationId           String?
+  organization             Organization?           @relation(fields: [organizationId], references: [id])
+  bulkMessages             BulkMessage[]
+  mediaFiles               MediaFile[]
+  managedEvents            EventsAllowedToManage[]
+  lastLayoutUpdates        Layout[]
+  resolvedRequests         GuestRequest[]
+  createdGuestRequestNotes GuestRequestNote[]
+  chatMessagesReplies      ChatMessage[]
+
+  @@index([organizationId])
+  @@index([role])
+}
+
+enum EventStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum VenuePurpose {
+  MAIN
+  RELIGIOUS
+  RECEPTION
+  COCKTAIL
+  AFTER_PARTY
+  PHOTO_SESSION
+  REHEARSAL_DINNER
+  OTHER
+}
+
+model Venue {
+  id      String       @id @default(cuid())
+  name    String
+  address String?
+  purpose VenuePurpose
+
+  // Relations
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([eventId])
+}
+
+enum GuestStatus {
+  CONFIRMED
+  PENDING
+  DECLINED
+  INACTIVE
+}
+
+enum GuestCategory {
+  FAMILY
+  FRIEND
+  WORK
+}
+
+enum GuestPriority {
+  P1
+  P2
+  P3
+}
+
+enum GuestLanguage {
+  ENGLISH
+  SPANISH
+  GERMAN
+  FRENCH
+  ITALIAN
+  PORTUGUESE
+}
+
+model Guest {
+  id                  String            @id @default(cuid())
+  name                String
+  phone               String?
+  // Deprecated fields
+  hasPlusOne          Boolean           @default(false)
+  plusOneName         String?
+  // End of deprecated fields
+  status              GuestStatus       @default(PENDING)
+  table               String?
+  dietaryRestrictions String?
+  notes               String?
+  category            String?
+  priority            GuestPriority
+  preferredLanguage   GuestLanguage     @default(SPANISH)
+  inviter             String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  event               Event             @relation(fields: [eventId], references: [id])
+  eventId             String
+  messageDeliveries   MessageDelivery[]
+  chatSessions        ChatSession[]
+  assignment          GuestAssignment?
+  guestRequests       GuestRequest[]
+  guestConfirmationResponses GuestConfirmationResponse[]
+  
+  // A primary guest is the one that was invited to the event, and the others are their guests
+  isPrimaryGuest      Boolean           @default(true)
+  hasMultipleGuests   Boolean           @default(false)
+  guestGroupId        String? // to map a Guest to a GuestGroup
+  guestGroup          GuestGroup? @relation("GroupMembers", fields: [guestGroupId], references: [id])
+  
+  // Relation for when this guest is the leader of a group
+  leadingGuestGroup   GuestGroup? @relation("LeadGuest")
+
+  @@index([eventId])
+  @@index([category])
+  @@index([status])
+  @@index([priority])
+  @@index([phone])
+  @@index([guestGroupId])
+}
+
+model GuestGroup {
+  id            String    @id @default(cuid())
+  eventId       String
+  event         Event     @relation(fields: [eventId], references: [id])
+  leadGuestId   String?    @unique // A guest can only lead one group (his own)
+  leadGuest     Guest?     @relation("LeadGuest", fields: [leadGuestId], references: [id])
+  guests        Guest[]   @relation("GroupMembers")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([eventId])
+  @@index([leadGuestId])
+}
+
+model EventQuestion {
+  id        String           @id @default(cuid())
+  question  String
+  answer    String
+  category  QuestionCategory
+  status    QuestionStatus   @default(ACTIVE)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  event     Event            @relation(fields: [eventId], references: [id])
+  eventId   String
+
+  @@index([eventId])
+  @@index([category])
+  @@index([status])
+}
+
+model Event {
+  id                    String                  @id @default(cuid())
+  name                  String
+  date                  DateTime
+  endDate               DateTime?
+  startTime             String?                 @db.VarChar(5) /// Time in 24-hour format (HH:mm)
+  endTime               String?                 @db.VarChar(5) /// Time in 24-hour format (HH:mm)
+  timezone              String?                 @default("America/Mexico_City") @db.VarChar(50) /// Valid IANA timezone identifier
+  person1               String
+  person2               String
+  description           String?                 @db.Text
+  status                EventStatus             @default(ACTIVE)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  organization          Organization            @relation(fields: [organizationId], references: [id])
+  organizationId        String
+  hasChatbotEnabled     Boolean                 @default(true)
+  guests                Guest[]
+  questions             EventQuestion[]
+  venues                Venue[]
+  bulkMessages          BulkMessage[]
+  eventManagers         EventsAllowedToManage[]
+  chatSessions          ChatSession[]
+  mediaFiles            MediaFile[]
+  layout                Layout?
+  guestRequests         GuestRequest[]
+  customGuestCategories CustomGuestCategory[]
+  requiredGuestConfirmation EventRequiredGuestConfirmation[]
+  guestGroups           GuestGroup[]
+
+  @@index([organizationId])
+}
+
+enum BulkMessageStatus {
+  CREATED
+  SENDING
+  COMPLETED
+}
+
+enum MessageDeliveryStatus {
+  PENDING
+  QUEUED
+  SENT
+  FAILED
+  DELIVERED
+  READ
+}
+
+model BulkMessage {
+  id           String            @id @default(cuid())
+  name         String // User-friendly name for the message campaign
+  templateSid  String // Twilio template ID
+  templateName String // For easy reference
+  event        Event             @relation(fields: [eventId], references: [id])
+  eventId      String
+  status       BulkMessageStatus @default(CREATED)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdById  String
+  deliveries   MessageDelivery[]
+  maxRetries   Int               @default(3)
+
+  @@index([eventId])
+  @@index([status])
+  @@index([createdById])
+}
+
+model MessageDelivery {
+  id            String                @id @default(cuid())
+  bulkMessage   BulkMessage           @relation(fields: [bulkMessageId], references: [id])
+  bulkMessageId String
+  guest         Guest                 @relation(fields: [guestId], references: [id])
+  guestId       String
+  status        MessageDeliveryStatus @default(PENDING)
+  queuedAt      DateTime?
+  sentAt        DateTime?
+  deliveredAt   DateTime?
+  readAt        DateTime?
+  messageSid    String?               @unique // Twilio message SID
+  errorMessage  String? // If the message failed, store the error
+  variables     Json? // Template variables used
+  retryCount    Int                   @default(0)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+
+  @@index([bulkMessageId])
+  @@index([guestId])
+  @@index([status])
+}
+
+model MediaFile {
+  id             String       @id @default(cuid())
+  filename       String // Original filename
+  fileKey        String // UploadThing file key
+  fileUrl        String // Public URL for the file
+  fileSize       Int // Size in bytes
+  fileType       String // MIME type
+  createdAt      DateTime     @default(now())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  addedBy        User         @relation(fields: [addedById], references: [id])
+  addedById      String
+  event          Event?       @relation(fields: [eventId], references: [id])
+  eventId        String?
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+  @@index([addedById])
+}
+
+model EventsAllowedToManage {
+  id        String   @id @default(cuid())
+  eventId   String
+  userId    String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+}
+
+enum MessageDirection {
+  INBOUND // Message from guest to system
+  OUTBOUND // Message from system to guest
+}
+
+model ChatSession {
+  id             String           @id @default(cuid())
+  // Will be deprecated in favor of phoneNumber
+  guest          Guest?           @relation(fields: [guestId], references: [id])
+  guestId        String?
+  event          Event?           @relation(fields: [eventId], references: [id])
+  eventId        String?
+  // Chat determined by phone number + organizationId
+  phoneNumber    String?
+  organization   Organization?    @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  isActive       Boolean          @default(true)
+  isTestSession  Boolean          @default(false)
+  startedAt      DateTime         @default(now())
+  lastMessageAt  DateTime         @default(now())
+  nextReplyAt    DateTime?
+  messages       ChatMessage[]
+  metadata       Json? // Store any session metadata
+  apiCalls       ChatbotApiCall[] // Add relation to ChatbotApiCall
+  agentExecutions AgentExecution[] // Add relation to AgentExecution
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([guestId])
+  @@index([eventId])
+  @@index([organizationId, phoneNumber, isActive, isTestSession])
+  @@index([guestId, eventId, isActive, isTestSession]) // Multi-column index for finding active sessions
+}
+
+model ChatMessage {
+  id               String           @id @default(cuid())
+  session          ChatSession      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId        String
+  direction        MessageDirection
+  content          String           @db.Text
+  twilioMessageSid String? // Store Twilio's message SID for tracking
+  twilioStatus     String? // Status reported by Twilio
+  contentType      String?          @default("text") // Type of content (text, audio, image, etc.)
+
+  // For analytics and debugging
+  promptTokens             Int? // Number of tokens in the prompt
+  completionTokens         Int? // Number of tokens in the completion
+  totalTokens              Int? // Total tokens used
+  cacheCreationInputTokens Int? // Number of tokens in the cache creation input
+  cacheReadInputTokens     Int? // Number of tokens in the cache read input
+  createdAt                DateTime @default(now())
+  
+  // Deprecated
+  toolCalls                Json? // Array of tool calls
+  
+  // The user who manually sent the message
+  sentById                 String?
+  sentBy                   User? @relation(fields: [sentById], references: [id])
+  
+  // Link to the agent execution that generated this message (for outbound messages)
+  agentExecutionId         String?
+  agentExecution           AgentExecution? @relation("ExecutionMessages", fields: [agentExecutionId], references: [id])
+
+  @@index([sessionId])
+  @@index([sentById])
+  @@index([twilioMessageSid])
+  @@index([agentExecutionId])
+}
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// >>> NEW ENUMS AND MODELS START HERE <<<
+
+enum ElementCornerStyle {
+  STRAIGHT
+  ROUNDED
+}
+
+enum LayoutElementType {
+  TABLE
+  DANCEFLOOR
+  DJ_BOOTH
+  ENTRANCE
+  WALL
+  BAR
+  STAGE
+  OTHER
+}
+
+enum TableShape {
+  CIRCLE
+  RECTANGLE
+  SQUARE
+}
+
+model Layout {
+  id              String          @id @default(cuid())
+  event           Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId         String          @unique // Enforce one layout per event
+  backgroundUrl   String?
+  elements        LayoutElement[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  lastUpdatedBy   User?           @relation(fields: [lastUpdatedById], references: [id])
+  lastUpdatedById String?
+
+  @@index([eventId])
+  @@index([lastUpdatedById])
+}
+
+model LayoutElement {
+  id            String              @id @default(cuid())
+  layout        Layout              @relation(fields: [layoutId], references: [id], onDelete: Cascade)
+  layoutId      String
+  type          LayoutElementType
+  x             Float
+  y             Float
+  width         Float
+  height        Float
+  rotation      Float?              @default(0)
+  label         String?
+  opacity       Float?              @default(1)
+  // Table-specific properties
+  shape         TableShape?
+  numberOfSeats Int?
+  color         String?             @db.VarChar(7) // Add optional color field (e.g., #RRGGBB)
+  cornerStyle   ElementCornerStyle? @default(STRAIGHT) // Add corner style field
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  assignments GuestAssignment[] // Guests assigned to this element (if it's a table)
+
+  @@index([layoutId])
+}
+
+model GuestAssignment {
+  id              String        @id @default(cuid())
+  guest           Guest         @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  guestId         String        @unique // A guest can only be assigned to one table
+  layoutElement   LayoutElement @relation(fields: [layoutElementId], references: [id], onDelete: Cascade)
+  layoutElementId String // The ID of the LayoutElement (specifically a table) the guest is assigned to
+  seatIndex       Int? // Optional: for assigning to a specific seat number at the table
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([layoutElementId])
+}
+
+// New GuestRequest Model
+model GuestRequest {
+  id               String             @id @default(cuid())
+  eventId          String
+  event            Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  guestId          String
+  guest            Guest              @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  requestText      String
+  status           RequestStatus      @default(PENDING)
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  resolvedAt       DateTime? // Timestamp when resolved
+  resolvedByUser   User?              @relation(fields: [resolvedByUserId], references: [id])
+  resolvedByUserId String? // ID of the user who resolved it
+  notes            GuestRequestNote[]
+
+  @@index([eventId])
+  @@index([guestId])
+  @@index([status])
+  @@index([resolvedByUserId])
+}
+
+model GuestRequestNote {
+  id              String       @id @default(cuid())
+  guestRequestId  String
+  guestRequest    GuestRequest @relation(fields: [guestRequestId], references: [id], onDelete: Cascade)
+  note            String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  createdByUser   User?        @relation(fields: [createdByUserId], references: [id])
+  createdByUserId String? // ID of the user who created the note
+
+  @@index([guestRequestId])
+  @@index([createdByUserId])
+}
+
+enum RequestStatus {
+  PENDING
+  RESOLVED
+  IGNORED
+}
+
+enum MessageCreditType {
+  TOP_UP
+  CONSUMPTION
+}
+
+enum MessageCreditPool {
+  ALLOWANCE // Credit consumed came from the monthly allowance
+  PURCHASED // Credit consumed came from purchased/topped-up balance
+}
+
+model OrganizationMessageCredits {
+  id                String             @id @default(cuid())
+  organizationId    String
+  organization      Organization       @relation(fields: [organizationId], references: [id])
+  credits           Int                @default(0) // positive for top-up, negative for consumption
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  relatedMessageSid String?
+  type              MessageCreditType // TOP_UP or CONSUMPTION
+  consumedFromPool  MessageCreditPool?
+
+  @@unique([organizationId, relatedMessageSid])
+  @@index([organizationId])
+  @@index([relatedMessageSid])
+  @@index([organizationId, type, createdAt]) // Useful for usage queries
+  @@index([organizationId, type, consumedFromPool, createdAt]) // More specific usage query index
+}
+
+// Twilio Credentials Model
+model TwilioCredentials {
+  id                 String       @id @default(cuid())
+  organizationId     String       @unique // Each org should have only one set of credentials
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  subAccountSid      String
+  encryptedAuthToken String // Store the API secret encrypted
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  @@index([organizationId])
+}
+
+model HiddenWhatsappTemplates {
+  id             String       @id @default(cuid())
+  templateSid    String       @unique
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, templateSid])
+}
+
+// New model for tracking chatbot API calls
+model ChatbotApiCall {
+  id                  String      @id @default(cuid())
+  messageId           String // The Anthropic message ID
+  sessionId           String
+  session             ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  type                String // e.g., "message"
+  role                String // e.g., "assistant"
+  model               String // e.g., "claude-3-7-sonnet-latest"
+  content             Json // The content array from the response
+  stopReason          String? // e.g., "tool_use", "end_turn"
+  stopSequence        String? // Stop sequence if any
+  inputTokens         Int // Tokens in the input
+  cacheCreationTokens Int // Tokens in cache creation
+  cacheReadTokens     Int // Tokens read from cache  
+  outputTokens        Int // Tokens in the output
+  createdAt           DateTime    @default(now())
+  
+  // Core tracing fields (keep these - they're essential)
+  agentExecutionId    String?
+  agentExecution      AgentExecution? @relation("ExecutionApiCalls", fields: [agentExecutionId], references: [id])
+  loopIterationId     String?
+  loopIteration       AgentLoopIteration? @relation("IterationApiCalls", fields: [loopIterationId], references: [id])
+  
+  // Minimal additional tracing (remove redundant fields)
+  errorMessage        String? // If the call failed, store the error
+  responseTimeMs      Int? // Time taken for this specific API call
+  
+  // Cost tracking (keep - not duplicated elsewhere)
+  estimatedCost       Float? // Estimated cost for this call
+
+  @@index([sessionId])
+  @@index([messageId])
+  @@index([model])
+  @@index([stopReason])
+  @@index([agentExecutionId])
+  @@index([loopIterationId])
+  @@index([createdAt])
+}
+
+model CustomGuestCategory {
+  id        String   @id @default(cuid())
+  name      String
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, name])
+}
+
+model EventRequiredGuestConfirmation {
+  id        String   @id @default(cuid())
+  label     String
+  eventId   String
+  bestWayToAsk String?
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  options EventRequiredGuestConfirmationOption[]
+  guestConfirmationResponses GuestConfirmationResponse[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([eventId])
+  @@unique([eventId, label])
+}
+
+model EventRequiredGuestConfirmationOption {
+  id        String   @id @default(cuid())
+  label     String
+  eventRequiredGuestConfirmationId String
+  eventRequiredGuestConfirmation EventRequiredGuestConfirmation @relation(fields: [eventRequiredGuestConfirmationId], references: [id], onDelete: Cascade)
+  guestConfirmationResponses GuestConfirmationResponse[]
+
+  @@index([eventRequiredGuestConfirmationId])
+  @@unique([eventRequiredGuestConfirmationId, label])
+}
+
+model GuestConfirmationResponse {
+  createdAt                            DateTime                           @default(now())
+  updatedAt                            DateTime                           @updatedAt
+  id                                   String                             @id @default(cuid())
+  guestId                              String
+  guest                                Guest                              @relation(fields: [guestId], references: [id], onDelete: Cascade)
+  eventRequiredGuestConfirmationId     String
+  eventRequiredGuestConfirmation       EventRequiredGuestConfirmation     @relation(fields: [eventRequiredGuestConfirmationId], references: [id], onDelete: Cascade)
+  selectedOptionId                     String?
+  selectedOption                       EventRequiredGuestConfirmationOption? @relation(fields: [selectedOptionId], references: [id], onDelete: Cascade)
+  customResponse                       String?                            // Store free-text responses
+  
+  @@unique([guestId, eventRequiredGuestConfirmationId])
+  @@index([guestId])
+  @@index([eventRequiredGuestConfirmationId])
+  @@index([selectedOptionId])
+}
+
+model FeatureFlag {
+  id                String                      @id @default(cuid())
+  name              String                      @unique
+  description       String?
+  isGloballyEnabled Boolean                     @default(false)
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+  whitelistedOrgs   FeatureFlagOrgWhitelist[]
+  blacklistedOrgs   FeatureFlagOrgBlacklist[]
+  features          Feature[]                   // Features that use this flag
+
+  @@index([name])
+  @@index([isGloballyEnabled])
+}
+
+model FeatureFlagOrgWhitelist {
+  id              String       @id @default(cuid())
+  featureFlag     FeatureFlag  @relation(fields: [featureFlagId], references: [id], onDelete: Cascade)
+  featureFlagId   String
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
+
+  @@unique([featureFlagId, organizationId])
+  @@index([featureFlagId])
+  @@index([organizationId])
+}
+
+model FeatureFlagOrgBlacklist {
+  id              String       @id @default(cuid())
+  featureFlag     FeatureFlag  @relation(fields: [featureFlagId], references: [id], onDelete: Cascade)
+  featureFlagId   String
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
+
+  @@unique([featureFlagId, organizationId])
+  @@index([featureFlagId])
+  @@index([organizationId])
+}
+
+// Feature-based pricing system models
+model Feature {
+  id                 String               @id @default(cuid())
+  name               String               @unique
+  description        String?
+  isActive           Boolean              @default(true)
+  featureFlagId      String?              // Optional link to feature flag
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  // Relations
+  organizationFeatures OrganizationFeature[]
+  featureFlag          FeatureFlag?         @relation(fields: [featureFlagId], references: [id])
+
+  @@index([isActive])
+  @@index([featureFlagId])
+}
+
+model LimitType {
+  id                 String               @id @default(cuid())
+  name               String               @unique
+  description        String?
+  defaultValue       Int                  @default(0)
+  unit               String?              // "events", "messages", "questions", etc.
+  isActive           Boolean              @default(true)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  // Relations
+  organizationLimits OrganizationLimit[]
+  organizationUsage  OrganizationUsage[]
+
+  @@index([isActive])
+}
+
+model OrganizationFeature {
+  id             String       @id @default(cuid())
+  organizationId String
+  featureId      String
+  isEnabled      Boolean      @default(true)
+  configuration  Json?        // Store feature-specific config
+  enabledAt      DateTime     @default(now())
+  enabledBy      String?      // Admin user ID who enabled this
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  feature        Feature      @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, featureId])
+  @@index([organizationId])
+  @@index([featureId])
+  @@index([isEnabled])
+}
+
+model OrganizationLimit {
+  id             String       @id @default(cuid())
+  organizationId String
+  limitTypeId    String
+  value          Int
+  setBy          String?      // Admin user ID who set this limit
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  limitType      LimitType    @relation(fields: [limitTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, limitTypeId])
+  @@index([organizationId])
+  @@index([limitTypeId])
+}
+
+model OrganizationUsage {
+  id             String       @id @default(cuid())
+  organizationId String
+  limitTypeId    String
+  currentValue   Int          @default(0)
+  periodStart    DateTime     // Start of billing period
+  periodEnd      DateTime     // End of billing period
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // Relations
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  limitType      LimitType    @relation(fields: [limitTypeId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, limitTypeId, periodStart])
+  @@index([organizationId])
+  @@index([limitTypeId])
+  @@index([periodStart, periodEnd])
+}
+
+// AI Agent Visual Debugger Models
+enum AgentType {
+  MAIN
+  SUB_AGENT
+  TOOL_AGENT
+}
+
+enum AgentExecutionStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum LoopIterationStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+model Agent {
+  id                String                @id @default(cuid())
+  name              String
+  description       String?
+  type              AgentType             @default(MAIN)
+  systemPrompt      String                @db.Text
+  model             String                @default("claude-3-5-sonnet-latest")
+  maxTokens         Int?                  @default(4096)
+  temperature       Float?                @default(0.7)
+  configuration     Json?                 // Store agent-specific config
+  isActive          Boolean               @default(true)
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  
+  // Relations
+  executions        AgentExecution[]
+  
+  @@index([name])
+  @@index([type])
+  @@index([isActive])
+}
+
+model AgentExecution {
+  id                String                @id @default(cuid())
+  sessionId         String
+  session           ChatSession           @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  agentId           String
+  agent             Agent                 @relation(fields: [agentId], references: [id])
+  // Link to parent execution
+  parentExecutionId String?               // Link to parent execution
+  parentExecution   AgentExecution?       @relation("SubExecutions", fields: [parentExecutionId], references: [id])
+  subExecutions     AgentExecution[]      @relation("SubExecutions")
+  
+  // Link to parent loop iteration
+  parentLoopIterationId String?
+  parentLoopIteration   AgentLoopIteration? @relation("SubExecutionsInLoop", fields: [parentLoopIterationId], references: [id])
+
+  // Execution details
+  status            AgentExecutionStatus  @default(PENDING)
+  systemPrompt      String                @db.Text // Snapshot of system prompt at execution time
+  userMessage       String?               @db.Text // The user message that triggered this execution
+  finalResponse     String?               @db.Text // Final response from the agent
+  
+  // Token metrics (detailed breakdown)
+  inputTokens       Int                   @default(0) // Regular input tokens
+  cacheCreationTokens Int                 @default(0) // Tokens used to create cache
+  cacheReadTokens   Int                   @default(0) // Tokens read from cache
+  outputTokens      Int                   @default(0) // Generated output tokens
+  executionTimeMs   Int?                  // Total execution time in milliseconds
+  
+  // Timestamps
+  startedAt         DateTime              @default(now())
+  completedAt       DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  
+  // Relations
+  loopIterations    AgentLoopIteration[]
+  apiCalls          ChatbotApiCall[]      @relation("ExecutionApiCalls")
+  messages          ChatMessage[]         @relation("ExecutionMessages")
+  
+  @@index([sessionId])
+  @@index([agentId])
+  @@index([parentExecutionId])
+  @@index([status])
+  @@index([startedAt])
+}
+
+model AgentLoopIteration {
+  id                String                @id @default(cuid())
+  executionId       String
+  execution         AgentExecution        @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  iterationNumber   Int                   // 1, 2, 3, etc.
+  status            LoopIterationStatus   @default(PENDING)
+
+  subExecutionsInLoop AgentExecution[]  @relation("SubExecutionsInLoop")
+  
+  // Input/Output
+  inputPrompt       String                @db.Text
+  outputContent     String?               @db.Text
+  reasoning         String?               @db.Text // Agent's reasoning for this iteration
+  
+  // Tool calls in this iteration
+  toolCalls         Json?                 // Array of tool calls made
+  toolResults       Json?                 // Results from tool calls
+  
+  // Metrics
+  // inputTokens       Int                   @default(0)
+  // outputTokens      Int                   @default(0)
+  // cacheHit          Boolean               @default(false)
+  // cacheReadTokens   Int                   @default(0)
+  iterationTimeMs   Int?                  // Time for this iteration
+  
+  // Timestamps
+  startedAt         DateTime              @default(now())
+  completedAt       DateTime?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  
+  // Relations
+  apiCalls          ChatbotApiCall[]      @relation("IterationApiCalls")
+  
+  @@index([executionId])
+  @@index([iterationNumber])
+  @@index([status])
+  @@unique([executionId, iterationNumber])
+}

@@ -1,0 +1,17 @@
+[{
+  "column_name": "updatedAt"
+}, {
+  "column_name": "category"
+}, {
+  "column_name": "isActive"
+}, {
+  "column_name": "createdAt"
+}, {
+  "column_name": "id"
+}, {
+  "column_name": "name"
+}, {
+  "column_name": "description"
+}, {
+  "column_name": "featureFlagId"
+}]

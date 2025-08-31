@@ -1,0 +1,73 @@
+[{
+  "table_name": "LayoutElement"
+}, {
+  "table_name": "ChatMessage"
+}, {
+  "table_name": "Layout"
+}, {
+  "table_name": "Waitlist"
+}, {
+  "table_name": "GuestAssignment"
+}, {
+  "table_name": "ChatSession"
+}, {
+  "table_name": "GuestRequest"
+}, {
+  "table_name": "Event"
+}, {
+  "table_name": "ChatbotApiCall"
+}, {
+  "table_name": "GuestRequestNote"
+}, {
+  "table_name": "CustomGuestCategory"
+}, {
+  "table_name": "GuestConfirmationResponse"
+}, {
+  "table_name": "OrganizationMessageCredits"
+}, {
+  "table_name": "_prisma_migrations"
+}, {
+  "table_name": "TwilioCredentials"
+}, {
+  "table_name": "EventRequiredGuestConfirmation"
+}, {
+  "table_name": "EventQuestion"
+}, {
+  "table_name": "Venue"
+}, {
+  "table_name": "User"
+}, {
+  "table_name": "MessageDelivery"
+}, {
+  "table_name": "BulkMessage"
+}, {
+  "table_name": "MediaFile"
+}, {
+  "table_name": "Organization"
+}, {
+  "table_name": "Guest"
+}, {
+  "table_name": "EventsAllowedToManage"
+}, {
+  "table_name": "HiddenWhatsappTemplates"
+}, {
+  "table_name": "EventRequiredGuestConfirmationOption"
+}, {
+  "table_name": "FeatureFlag"
+}, {
+  "table_name": "FeatureFlagOrgWhitelist"
+}, {
+  "table_name": "FeatureFlagOrgBlacklist"
+}, {
+  "table_name": "LimitType"
+}, {
+  "table_name": "GuestGroup"
+}, {
+  "table_name": "Feature"
+}, {
+  "table_name": "OrganizationFeature"
+}, {
+  "table_name": "OrganizationLimit"
+}, {
+  "table_name": "OrganizationUsage"
+}]

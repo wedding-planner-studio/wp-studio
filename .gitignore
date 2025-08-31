@@ -1,0 +1,16 @@
+node_modules
+.env
+.next
+.turbo
+.vercel
+.DS_Store
+.cursorrules
+.cursorignore
+.cursor/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.test
+.env.production
