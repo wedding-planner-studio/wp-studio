@@ -11,6 +11,9 @@ const config = {
       {
         hostname: 'utfs.io',
       },
+      {
+        hostname: '8eyoe3mdhc.ufs.sh',
+      },
     ],
   },
   async headers() {
